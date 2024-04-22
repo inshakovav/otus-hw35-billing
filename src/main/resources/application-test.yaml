@@ -8,6 +8,7 @@ payment:
     payment-succeeded-topic: hw30.payment.succeeded-payment-test
     payment-rejected-topic: hw30.payment.rejected-payment-test
     warehouse-rejected-topic: hw30.warehouse.rejected-payment-test
+    delivery-executed-topic: hw30.delivery.executed-payment-test
     delivery-rejected-topic: hw30.delivery.rejected-payment-test
 
 spring:

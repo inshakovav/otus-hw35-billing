@@ -20,7 +20,7 @@ public class SageCompensationService {
 
     @Transactional
     public void executePaymentReject(PaymentRejectedMessage message) {
-        PaymentEntity order = findPaymentByOrderId(message.getOrderId());
+        PaymentEntity payment = findPaymentByOrderId(message.getOrderId());
         log.info("Payment was rejected: {}", message);
         payment.setStatus(PaymentStatus.REJECTED_BY_PAYMENT);
         paymentRepository.save(payment);

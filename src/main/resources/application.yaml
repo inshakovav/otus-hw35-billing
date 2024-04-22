@@ -7,7 +7,8 @@ payment:
     order-created-topic: hw30.order.created
     payment-succeeded-topic: hw30.payment.succeeded
     payment-rejected-topic: hw30.payment.rejected
-    warehouse-rejected-topic: hw30.warehouse.rejected
+    warehouse-rejected-topic: hw30.warehouse.product.reservation.rejected
+    delivery-executed-topic: hw30.delivery.executed
     delivery-rejected-topic: hw30.delivery.rejected
 
 spring:

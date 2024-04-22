@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class PaymentServiceTest {
-    PaymentService paymentService = new PaymentService(null, null);
+    PaymentService paymentService = new PaymentService(null, null, null);
 
     @Test
     void testExecutePayment_whenOrderIdNotDivisibleBy5_thenReturnTrue() {
@@ -18,5 +18,12 @@ class PaymentServiceTest {
 
         boolean result = paymentService.executePayment(Long.valueOf(15));
         Assertions.assertEquals(false, result);
+    }
+
+    @Test
+    void testExecutePayment_whenOrderIdDivisibleBy5AndLess5_thenReturnTrue() {
+
+        boolean result = paymentService.executePayment(Long.valueOf(0));
+        Assertions.assertEquals(true, result);
     }
 }

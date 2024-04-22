@@ -1,5 +1,6 @@
 package com.example.payment.kafka;
 
+import com.example.payment.dto.DeliveryExecutedMessage;
 import com.example.payment.dto.OrderCreatedMessage;
 import com.example.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,14 @@ public class KafkaConsumerService {
         } catch (Exception e) {
             log.warn("Kafka unknown error Order processing: ", message);
         }
+    }
 
+    @KafkaListener(topics = "${payment.kafka.delivery-executed-topic}", groupId = "${payment.kafka.message-group-name}")
+    public void receiveDeliveryExecuted(DeliveryExecutedMessage message) {
+        try {
+            paymentService.executeDeliveryExecution(message);
+        } catch (Exception e) {
+            log.warn("Kafka unknown error Order processing: ", message);
+        }
     }
 }
