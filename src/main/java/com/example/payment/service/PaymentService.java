@@ -8,10 +8,11 @@ import com.example.payment.entity.PaymentEntity;
 import com.example.payment.entity.PaymentStatus;
 import com.example.payment.kafka.KafkaProducerService;
 import com.example.payment.repository.PaymentRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Slf4j
 @Service
