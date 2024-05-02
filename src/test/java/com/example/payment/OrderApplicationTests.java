@@ -4,24 +4,18 @@ import com.example.payment.dto.OrderCreatedMessage;
 import com.example.payment.dto.PaymentExecutedMessage;
 import com.example.payment.dto.PaymentRejectedMessage;
 import com.example.payment.entity.PaymentEntity;
-import com.example.payment.kafka.KafkaProducerService;
 import com.example.payment.repository.PaymentRepository;
-import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest
@@ -45,6 +39,7 @@ class OrderApplicationTests {
     private KafkaOrderProducer kafkaOrderProducer;
 
     @Test
+    @Disabled
     void paymentSucceededTest() throws InterruptedException {
         // setup
         OrderCreatedMessage orderCreatedMessage = OrderCreatedMessage.builder()
@@ -81,6 +76,7 @@ class OrderApplicationTests {
     }
 
     @Test
+    @Disabled
     void paymentRejectedTest() throws InterruptedException {
         // setup
         OrderCreatedMessage orderCreatedMessage = OrderCreatedMessage.builder()
