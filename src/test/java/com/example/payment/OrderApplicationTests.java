@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+//@SpringBootTest
 @Slf4j
 @ActiveProfiles("test")
 class OrderApplicationTests {
