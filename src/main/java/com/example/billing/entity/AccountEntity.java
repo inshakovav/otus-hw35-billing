@@ -5,17 +5,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "billing", schema = "billing_scheme")
+@Table(name = "account", schema = "billing_scheme")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-public class PaymentEntity {
+public class AccountEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -27,8 +28,6 @@ public class PaymentEntity {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
-
-    private Long orderId;
+    private String name;
+    private BigDecimal balance;
 }

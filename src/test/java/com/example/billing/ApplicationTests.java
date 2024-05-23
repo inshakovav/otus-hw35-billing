@@ -3,8 +3,8 @@ package com.example.billing;
 import com.example.billing.dto.OrderCreatedMessage;
 import com.example.billing.dto.PaymentExecutedMessage;
 import com.example.billing.dto.PaymentRejectedMessage;
-import com.example.billing.entity.PaymentEntity;
-import com.example.billing.repository.PaymentRepository;
+import com.example.billing.entity.AccountEntity;
+import com.example.billing.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.*;
 //@SpringBootTest
 @Slf4j
 @ActiveProfiles("test")
-class OrderApplicationTests {
+class ApplicationTests {
 
     @Autowired
-    PaymentRepository paymentRepository;
+    AccountRepository accountRepository;
 
     @Autowired
     private WebApplicationContext wac;
@@ -67,7 +67,7 @@ class OrderApplicationTests {
     }
 
     private long getPaymentEntity() {
-        Optional<PaymentEntity> lastPayment = paymentRepository.findFirstByOrderByIdDesc();
+        Optional<AccountEntity> lastPayment = accountRepository.findFirstByOrderByIdDesc();
         log.info("Last record={}", lastPayment);
         if (lastPayment.isEmpty()) {
             fail("DB error, Payment doesn't saved");

@@ -13,7 +13,7 @@ billing:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5440/db_otus_30
+    url: jdbc:postgresql://localhost:5440/db_otus_35
     username: postgres
     password: postgres
 #  flyway:
