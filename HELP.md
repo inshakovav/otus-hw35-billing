@@ -16,3 +16,11 @@ curl -H 'Content-Type: application/json' \
 ```bash
 curl http://localhost:8082/account | json_pp
 ```
+
+#### Topup
+```bash
+curl -H 'Content-Type: application/json' \
+     -d '{ "amount":"1.2"}' \
+     -X POST \
+     http://localhost:8082/account/top-up/2 | json_pp
+```
