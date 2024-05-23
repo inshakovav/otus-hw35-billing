@@ -1,6 +1,7 @@
 package com.example.billing.service;
 
 import com.example.billing.dto.AccountCreateDto;
+import com.example.billing.dto.OrderCreatedMessage;
 import com.example.billing.dto.TopUpDto;
 import com.example.billing.entity.AccountEntity;
 import com.example.billing.repository.AccountRepository;
@@ -38,5 +39,27 @@ public class AccountService {
         account.setBalance(account.getBalance().add(topUpDto.getAmount()));
         accountRepository.save(account);
         return account;
+    }
+
+    @Transactional
+    public void billing(OrderCreatedMessage message) {
+        Optional<AccountEntity> optionalAccount = accountRepository.findById(message.getAccountId());
+        AccountEntity account = optionalAccount.orElseThrow(
+                () -> new RuntimeException("Can't find account with id:" + message.getAccountId()));
+        checkEnoughMoney(account, message.getOrderPrice());
+        writeOff(account, message.getOrderPrice());
+        accountRepository.save(account);
+    }
+
+    void checkEnoughMoney(AccountEntity account, BigDecimal orderPrice) {
+        if (account.getBalance().compareTo(orderPrice) < 0) {
+            throw new RuntimeException("Not enough money on the account. Balance:" + account.getBalance());
+        }
+    }
+
+    void writeOff(AccountEntity account, BigDecimal orderPrice) {
+        BigDecimal subtractResult = account.getBalance().subtract(orderPrice);
+        account.setBalance(subtractResult);
+        log.info("Write of:{} from account:{}", subtractResult, account.getId());
     }
 }

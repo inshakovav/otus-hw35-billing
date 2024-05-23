@@ -11,10 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 public class OrderCreatedMessage {
+    private Long accountId;
     private Long orderId;
-    private String orderDescription;
-    private Long productId;
-    private BigDecimal productPrice;
-    private BigDecimal productQuantity;
-    private String deliveryAddress;
+    private BigDecimal orderPrice;
 }

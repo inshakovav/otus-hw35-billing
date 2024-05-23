@@ -7,9 +7,6 @@ billing:
     order-created-topic: hw35.order.created-billing-test
     payment-succeeded-topic: hw35.payment.succeeded-payment-test
     payment-rejected-topic: hw35.payment.rejected-payment-test
-    warehouse-rejected-topic: hw35.warehouse.rejected-payment-test
-    delivery-executed-topic: hw35.delivery.executed-payment-test
-    delivery-rejected-topic: hw35.delivery.rejected-payment-test
 
 spring:
   datasource:
