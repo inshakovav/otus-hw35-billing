@@ -4,12 +4,12 @@ server:
 payment:
   kafka:
     message-group-name: billing-group
-    order-created-topic: hw30.order.created
-    billing-succeeded-topic: hw30.billing.succeeded
-    billing-rejected-topic: hw30.billing.rejected
-    warehouse-rejected-topic: hw30.warehouse.product.reservation.rejected
-    delivery-executed-topic: hw30.delivery.executed
-    delivery-rejected-topic: hw30.delivery.rejected
+    order-created-topic: hw35.order.created
+    billing-succeeded-topic: hw35.billing.succeeded
+    billing-rejected-topic: hw35.billing.rejected
+    warehouse-rejected-topic: hw35.warehouse.product.reservation.rejected
+    delivery-executed-topic: hw35.delivery.executed
+    delivery-rejected-topic: hw35.delivery.rejected
 
 spring:
   application:
