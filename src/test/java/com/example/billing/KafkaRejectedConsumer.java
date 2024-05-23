@@ -1,7 +1,6 @@
-package com.example.payment;
+package com.example.billing;
 
-import com.example.payment.dto.PaymentExecutedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
+import com.example.billing.dto.PaymentRejectedMessage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,7 +16,7 @@ public class KafkaRejectedConsumer {
     private CountDownLatch latch = new CountDownLatch(1);
     private PaymentRejectedMessage rejectedMessage;
 
-    @KafkaListener(topics = "${payment.kafka.payment-rejected-topic}", groupId = "${payment.kafka.message-group-name}")
+    @KafkaListener(topics = "${billing.kafka.payment-rejected-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveRejected(PaymentRejectedMessage message) {
         log.info("received Rejected payload='{}'", message.toString());
         rejectedMessage = message;

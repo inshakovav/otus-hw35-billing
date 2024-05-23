@@ -1,4 +1,4 @@
-package com.example.payment.entity;
+package com.example.billing.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "payment", schema = "payment_scheme")
+@Table(name = "billing", schema = "billing_scheme")
 @Getter
 @Setter
 @AllArgsConstructor

@@ -1,9 +1,8 @@
-package com.example.payment.kafka;
+package com.example.billing.kafka;
 
-import com.example.payment.dto.DeliveryRejectedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
-import com.example.payment.dto.WarehouseReservationRejectedMessage;
-import com.example.payment.service.SageCompensationService;
+import com.example.billing.dto.DeliveryRejectedMessage;
+import com.example.billing.dto.WarehouseReservationRejectedMessage;
+import com.example.billing.service.SageCompensationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,7 +15,7 @@ public class KafkaConsumerSagaCompensationService {
 
     private final SageCompensationService sageCompensationService;
 
-    @KafkaListener(topics = "${payment.kafka.warehouse-rejected-topic}", groupId = "${payment.kafka.message-group-name}")
+    @KafkaListener(topics = "${billing.kafka.warehouse-rejected-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveWarehouseRejected(WarehouseReservationRejectedMessage message) {
         try {
             sageCompensationService.executeWarehouseReject(message);
@@ -25,7 +24,7 @@ public class KafkaConsumerSagaCompensationService {
         }
     }
 
-    @KafkaListener(topics = "${payment.kafka.delivery-rejected-topic}", groupId = "${payment.kafka.message-group-name}")
+    @KafkaListener(topics = "${billing.kafka.delivery-rejected-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveDeliveryRejected(DeliveryRejectedMessage message) {
         try {
             sageCompensationService.executeDeliveryReject(message);

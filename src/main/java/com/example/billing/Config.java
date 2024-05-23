@@ -1,4 +1,4 @@
-package com.example.payment;
+package com.example.billing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

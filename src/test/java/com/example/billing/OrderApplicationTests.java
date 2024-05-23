@@ -1,10 +1,10 @@
-package com.example.payment;
+package com.example.billing;
 
-import com.example.payment.dto.OrderCreatedMessage;
-import com.example.payment.dto.PaymentExecutedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
-import com.example.payment.entity.PaymentEntity;
-import com.example.payment.repository.PaymentRepository;
+import com.example.billing.dto.OrderCreatedMessage;
+import com.example.billing.dto.PaymentExecutedMessage;
+import com.example.billing.dto.PaymentRejectedMessage;
+import com.example.billing.entity.PaymentEntity;
+import com.example.billing.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

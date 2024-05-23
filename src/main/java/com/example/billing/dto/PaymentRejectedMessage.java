@@ -1,4 +1,4 @@
-package com.example.payment.dto;
+package com.example.billing.dto;
 
 import lombok.*;
 
@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class WarehouseReservationRejectedMessage {
+public class PaymentRejectedMessage {
     private Long orderId;
-    private Long reservationId;
+    private Long paymentId;
     private String errorCode;
 }

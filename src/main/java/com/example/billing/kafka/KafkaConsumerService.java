@@ -1,8 +1,8 @@
-package com.example.payment.kafka;
+package com.example.billing.kafka;
 
-import com.example.payment.dto.DeliveryExecutedMessage;
-import com.example.payment.dto.OrderCreatedMessage;
-import com.example.payment.service.PaymentService;
+import com.example.billing.dto.DeliveryExecutedMessage;
+import com.example.billing.dto.OrderCreatedMessage;
+import com.example.billing.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaConsumerService {
 
-    private final PaymentService paymentService;
-    @KafkaListener(topics = "${payment.kafka.order-created-topic}", groupId = "${payment.kafka.message-group-name}")
+    private final PaymentService billingService;
+    @KafkaListener(topics = "${billing.kafka.order-created-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveOrderCreatedMessage(OrderCreatedMessage message) {
         try {
             paymentService.process(message);
@@ -23,10 +23,10 @@ public class KafkaConsumerService {
         }
     }
 
-    @KafkaListener(topics = "${payment.kafka.delivery-executed-topic}", groupId = "${payment.kafka.message-group-name}")
+    @KafkaListener(topics = "${billing.kafka.delivery-executed-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveDeliveryExecuted(DeliveryExecutedMessage message) {
         try {
-            paymentService.executeDeliveryExecution(message);
+            billingService.executeDeliveryExecution(message);
         } catch (Exception e) {
             log.warn("Kafka unknown error Order processing: ", message);
         }

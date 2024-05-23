@@ -1,4 +1,4 @@
-CREATE TABLE payment_scheme.payment
+CREATE TABLE billing_scheme.billing
 (
     id         bigserial,
     created_at timestamp NOT NULL,

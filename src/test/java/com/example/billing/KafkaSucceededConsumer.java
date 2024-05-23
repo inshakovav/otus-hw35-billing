@@ -1,7 +1,6 @@
-package com.example.payment;
+package com.example.billing;
 
-import com.example.payment.dto.PaymentExecutedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
+import com.example.billing.dto.PaymentExecutedMessage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,7 +16,7 @@ public class KafkaSucceededConsumer {
     private CountDownLatch latch = new CountDownLatch(1);
     private PaymentExecutedMessage executedMessage;
 
-    @KafkaListener(topics = "${payment.kafka.payment-succeeded-topic}", groupId = "${payment.kafka.message-group-name}")
+    @KafkaListener(topics = "${billing.kafka.payment-succeeded-topic}", groupId = "${billing.kafka.message-group-name}")
     public void receiveSucceeded(PaymentExecutedMessage message) {
         log.info("received Executed payload='{}'", message.toString());
         executedMessage = message;

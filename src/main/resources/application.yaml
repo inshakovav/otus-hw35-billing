@@ -3,17 +3,17 @@ server:
 
 payment:
   kafka:
-    message-group-name: payment-group
+    message-group-name: billing-group
     order-created-topic: hw30.order.created
-    payment-succeeded-topic: hw30.payment.succeeded
-    payment-rejected-topic: hw30.payment.rejected
+    billing-succeeded-topic: hw30.billing.succeeded
+    billing-rejected-topic: hw30.billing.rejected
     warehouse-rejected-topic: hw30.warehouse.product.reservation.rejected
     delivery-executed-topic: hw30.delivery.executed
     delivery-rejected-topic: hw30.delivery.rejected
 
 spring:
   application:
-    name: payment
+    name: billing
 
   datasource:
     url: jdbc:postgresql://my-db-postgresql.default.svc.cluster.local:5432/db_otus_30
@@ -23,7 +23,7 @@ spring:
       leak-detection-threshold: 10000
   flyway:
     enabled: true
-    schemas: payment_scheme
+    schemas: billing_scheme
 
   kafka:
     bootstrap-servers: my-kafka.default.svc.cluster.local:9092

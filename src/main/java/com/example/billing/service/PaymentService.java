@@ -1,13 +1,13 @@
-package com.example.payment.service;
+package com.example.billing.service;
 
-import com.example.payment.dto.DeliveryExecutedMessage;
-import com.example.payment.dto.OrderCreatedMessage;
-import com.example.payment.dto.PaymentExecutedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
-import com.example.payment.entity.PaymentEntity;
-import com.example.payment.entity.PaymentStatus;
-import com.example.payment.kafka.KafkaProducerService;
-import com.example.payment.repository.PaymentRepository;
+import com.example.billing.dto.DeliveryExecutedMessage;
+import com.example.billing.dto.OrderCreatedMessage;
+import com.example.billing.dto.PaymentExecutedMessage;
+import com.example.billing.dto.PaymentRejectedMessage;
+import com.example.billing.entity.PaymentEntity;
+import com.example.billing.entity.PaymentStatus;
+import com.example.billing.kafka.KafkaProducerService;
+import com.example.billing.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

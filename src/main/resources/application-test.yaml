@@ -1,10 +1,10 @@
 #server:
 #  port: 8000
 
-payment:
+billing:
   kafka:
-    message-group-name: payment-group-payment-test
-    order-created-topic: hw30.order.created-payment-test
+    message-group-name: billing-group-test
+    order-created-topic: hw30.order.created-billing-test
     payment-succeeded-topic: hw30.payment.succeeded-payment-test
     payment-rejected-topic: hw30.payment.rejected-payment-test
     warehouse-rejected-topic: hw30.warehouse.rejected-payment-test

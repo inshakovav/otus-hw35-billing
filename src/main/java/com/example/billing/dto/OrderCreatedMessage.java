@@ -1,4 +1,4 @@
-package com.example.payment.dto;
+package com.example.billing.dto;
 
 import lombok.*;
 
@@ -10,10 +10,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @ToString
-public class PaymentExecutedMessage {
+public class OrderCreatedMessage {
     private Long orderId;
     private String orderDescription;
     private Long productId;
+    private BigDecimal productPrice;
+    private BigDecimal productQuantity;
     private String deliveryAddress;
-    private Long paymentId;
 }

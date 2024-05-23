@@ -1,9 +1,7 @@
-package com.example.payment.kafka;
+package com.example.billing.kafka;
 
-import com.example.payment.dto.OrderCreatedMessage;
-import com.example.payment.dto.PaymentExecutedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
-import com.example.payment.entity.PaymentEntity;
+import com.example.billing.dto.PaymentExecutedMessage;
+import com.example.billing.dto.PaymentRejectedMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class KafkaProducerService {
-    @Value("${payment.kafka.payment-succeeded-topic}")
+    @Value("${billing.kafka.billing-succeeded-topic}")
     private String paymentSucceededTopic;
 
-    @Value("${payment.kafka.payment-rejected-topic}")
+    @Value("${billing.kafka.payment-rejected-topic}")
     private String paymentRejectedTopic;
 
     private final KafkaTemplate<String, Object> kafkaTemplate;

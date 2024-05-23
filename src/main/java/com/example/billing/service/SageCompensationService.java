@@ -1,11 +1,11 @@
-package com.example.payment.service;
+package com.example.billing.service;
 
-import com.example.payment.dto.DeliveryRejectedMessage;
-import com.example.payment.dto.PaymentRejectedMessage;
-import com.example.payment.dto.WarehouseReservationRejectedMessage;
-import com.example.payment.entity.PaymentEntity;
-import com.example.payment.entity.PaymentStatus;
-import com.example.payment.repository.PaymentRepository;
+import com.example.billing.dto.DeliveryRejectedMessage;
+import com.example.billing.dto.PaymentRejectedMessage;
+import com.example.billing.dto.WarehouseReservationRejectedMessage;
+import com.example.billing.entity.PaymentEntity;
+import com.example.billing.entity.PaymentStatus;
+import com.example.billing.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
