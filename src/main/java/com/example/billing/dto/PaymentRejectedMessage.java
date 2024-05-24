@@ -14,6 +14,6 @@ public class PaymentRejectedMessage {
     private Long accountId;
     private Long orderId;
     private BigDecimal orderPrice;
-    private Long paymentId;
+//    private Long paymentId;
     private String errorCode;
 }

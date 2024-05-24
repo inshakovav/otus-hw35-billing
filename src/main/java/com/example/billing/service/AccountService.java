@@ -6,6 +6,7 @@ import com.example.billing.kafka.KafkaProducerService;
 import com.example.billing.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,8 +45,9 @@ public class AccountService {
     }
 
     public void billing(OrderCreatedMessage message) {
-        AccountEntity account = writeOff(message);
-        if (account != null) {
+        AccountEntity account = findAccount(message);
+        try {
+            account = writeOff(account, message.getOrderPrice());
             PaymentExecutedMessage paymentExecutedMessage = PaymentExecutedMessage.builder()
                     .accountId(message.getAccountId())
                     .orderId(message.getOrderId())
@@ -53,7 +55,7 @@ public class AccountService {
                     .accountId(account.getId())
                     .build();
             kafkaProducerService.sendSucceededPayment(paymentExecutedMessage);
-        } else {
+        } catch (RuntimeException ex) {
             PaymentRejectedMessage paymentRejectedMessage = PaymentRejectedMessage.builder()
                     .accountId(message.getAccountId())
                     .orderId(message.getOrderId())
@@ -66,19 +68,19 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountEntity writeOff(OrderCreatedMessage message) {
-        Optional<AccountEntity> optionalAccount = accountRepository.findById(message.getAccountId());
-        if (optionalAccount.isEmpty()) {
-            log.warn("Can't find account with id:{}", message.getAccountId());
-            return null;
+    public AccountEntity writeOff(AccountEntity account, BigDecimal orderPrice) {
+        if (account.getBalance().compareTo(orderPrice) < 0) {
+            log.info("Write off rejected. Not enough money on the account. Balance:{}, orderPrice:{}", account.getBalance(), orderPrice);
+            throw new RuntimeException("Not enough money on the account. Balance:" + account.getBalance());
         }
-        AccountEntity account = optionalAccount.get();
-        if (account.getBalance().compareTo(message.getOrderPrice()) < 0) {
-            log.info("Not enough money on the account. Balance:{}", account.getBalance());
-            return null;
-        }
-        subtractMoney(account, message.getOrderPrice());
+        subtractMoney(account, orderPrice);
         accountRepository.save(account);
+        return account;
+    }
+
+    private AccountEntity findAccount(OrderCreatedMessage message) {
+        AccountEntity account = accountRepository.findById(message.getAccountId())
+                .orElseThrow(() -> new RuntimeException("Can't find account with id:" + message.getAccountId()));
         return account;
     }
 
