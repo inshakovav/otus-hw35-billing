@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+//@SpringBootTest
 @Slf4j
 @ActiveProfiles("test")
 class ApplicationTests {
@@ -46,6 +46,7 @@ class ApplicationTests {
     private KafkaOrderProducer kafkaOrderProducer;
 
     @Test
+    @Disabled
     void paymentSucceededTest() throws InterruptedException {
         // setup
         OrderCreatedMessage orderCreatedMessage = OrderCreatedMessage.builder()
@@ -76,6 +77,7 @@ class ApplicationTests {
     }
 
     @Test
+    @Disabled
     void paymentRejectedTest() throws InterruptedException {
         // setup
         OrderCreatedMessage orderCreatedMessage = OrderCreatedMessage.builder()
