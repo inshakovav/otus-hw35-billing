@@ -2,6 +2,8 @@ package com.example.billing.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -9,9 +11,8 @@ import lombok.*;
 @Builder
 @ToString
 public class PaymentExecutedMessage {
+    private Long accountId;
     private Long orderId;
-    private String orderDescription;
-    private Long productId;
-    private String deliveryAddress;
+    private BigDecimal orderPrice;
     private Long paymentId;
 }

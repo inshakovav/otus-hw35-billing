@@ -1,12 +1,12 @@
 server:
   port: 8082
 
-payment:
+billing:
   kafka:
     message-group-name: billing-group
     order-created-topic: hw35.order.created
-    billing-succeeded-topic: hw35.billing.succeeded
-    billing-rejected-topic: hw35.billing.rejected
+    payment-executed-topic: hw35.payment.executed
+    payment-rejected-topic: hw35.payment.rejected
 
 spring:
   application:

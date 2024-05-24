@@ -28,7 +28,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public AccountEntity getById(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(new RuntimeException("Not fond account id:" + id);
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Not fond account id:" + id));
     }
 
     @PostMapping

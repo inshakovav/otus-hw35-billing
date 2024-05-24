@@ -1,9 +1,8 @@
 package com.example.billing.service;
 
-import com.example.billing.dto.AccountCreateDto;
-import com.example.billing.dto.OrderCreatedMessage;
-import com.example.billing.dto.TopUpDto;
+import com.example.billing.dto.*;
 import com.example.billing.entity.AccountEntity;
+import com.example.billing.kafka.KafkaProducerService;
 import com.example.billing.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +12,15 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static org.springframework.util.Assert.isNull;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    public final KafkaProducerService kafkaProducerService;
 
     public AccountEntity create(AccountCreateDto accountCreateDto) {
         AccountEntity account = AccountEntity.builder()
@@ -41,25 +43,48 @@ public class AccountService {
         return account;
     }
 
-    @Transactional
     public void billing(OrderCreatedMessage message) {
-        Optional<AccountEntity> optionalAccount = accountRepository.findById(message.getAccountId());
-        AccountEntity account = optionalAccount.orElseThrow(
-                () -> new RuntimeException("Can't find account with id:" + message.getAccountId()));
-        checkEnoughMoney(account, message.getOrderPrice());
-        writeOff(account, message.getOrderPrice());
-        accountRepository.save(account);
-    }
-
-    void checkEnoughMoney(AccountEntity account, BigDecimal orderPrice) {
-        if (account.getBalance().compareTo(orderPrice) < 0) {
-            throw new RuntimeException("Not enough money on the account. Balance:" + account.getBalance());
+        AccountEntity account = writeOff(message);
+        if (account != null) {
+            PaymentExecutedMessage paymentExecutedMessage = PaymentExecutedMessage.builder()
+                    .accountId(message.getAccountId())
+                    .orderId(message.getOrderId())
+                    .orderPrice(message.getOrderPrice())
+                    .accountId(account.getId())
+                    .build();
+            kafkaProducerService.sendSucceededPayment(paymentExecutedMessage);
+        } else {
+            PaymentRejectedMessage paymentRejectedMessage = PaymentRejectedMessage.builder()
+                    .accountId(message.getAccountId())
+                    .orderId(message.getOrderId())
+                    .orderPrice(message.getOrderPrice())
+                    .accountId(account.getId())
+                    .errorCode("Not enough money")
+                    .build();
+            kafkaProducerService.sendRejectedPayment(paymentRejectedMessage);
         }
     }
 
-    void writeOff(AccountEntity account, BigDecimal orderPrice) {
+    @Transactional
+    public AccountEntity writeOff(OrderCreatedMessage message) {
+        Optional<AccountEntity> optionalAccount = accountRepository.findById(message.getAccountId());
+        if (optionalAccount.isEmpty()) {
+            log.warn("Can't find account with id:{}", message.getAccountId());
+            return null;
+        }
+        AccountEntity account = optionalAccount.get();
+        if (account.getBalance().compareTo(message.getOrderPrice()) < 0) {
+            log.info("Not enough money on the account. Balance:{}", account.getBalance());
+            return null;
+        }
+        subtractMoney(account, message.getOrderPrice());
+        accountRepository.save(account);
+        return account;
+    }
+
+    void subtractMoney(AccountEntity account, BigDecimal orderPrice) {
         BigDecimal subtractResult = account.getBalance().subtract(orderPrice);
         account.setBalance(subtractResult);
-        log.info("Write of:{} from account:{}", subtractResult, account.getId());
+        log.info("Write of:{} from account:{}, balance:{}", orderPrice, account.getId(), subtractResult);
     }
 }
